@@ -145,6 +145,16 @@ class Tree
     in_order(current_node.right_node, output)
     output
   end
+
+  # Return a postorder array
+  def post_order(current_node = @root, output = [])
+    return if current_node.nil?
+
+    post_order(current_node.left_node, output)
+    post_order(current_node.right_node, output)
+    output.push(current_node.value)
+    output
+  end
 end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -152,5 +162,7 @@ tree = Tree.new(array)
 tree.insert(420)
 tree.delete(6345)
 tree.pretty_print
+p tree
 p tree.pre_order
 p tree.in_order
+p tree.post_order
