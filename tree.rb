@@ -53,9 +53,8 @@ class Tree
     Node.new(centre_value, left_node, right_node)
   end
 
-  def build_tree(array)
-    current_array = cleanup_array(array)
-    create_nodes(current_array)
+  def build_tree(input_array)
+    array = cleanup_array(input_array)
 
     # Creating the root of the tree
     centre_value = centre_element(array)
@@ -67,13 +66,13 @@ class Tree
   end
 
   # Prints the binary tree
-  def pretty_print(node = @root, prefix = '', is_left: true)
+  def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left_node, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_node
   end
 end
 
-array = [1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345]
+array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(array)
 tree.pretty_print
