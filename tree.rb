@@ -2,3 +2,6 @@
 
 require_relative 'node'
 require 'pry-byebug'
+
+class Tree
+end
