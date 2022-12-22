@@ -104,6 +104,27 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left_node, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_node
   end
+
+  # Return an array traversed via level order
+  def level_order
+    queue = []
+    next_queue = []
+    output_array = []
+    # Add layer 0 to queue
+    queue.push(@root)
+    until queue.empty?
+      queue.each do |node|
+        # Place current node value into the array
+        output_array.push(node.value)
+        # Place its children in the queue
+        next_queue.push(node.left_node) unless node.left_node.nil?
+        next_queue.push(node.right_node) unless node.right_node.nil?
+      end
+      queue = next_queue.dup
+      next_queue.clear
+    end
+    output_array
+  end
 end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -111,4 +132,3 @@ tree = Tree.new(array)
 tree.insert(420)
 tree.delete(6345)
 tree.pretty_print
-p tree.find(420)
