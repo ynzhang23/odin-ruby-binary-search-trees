@@ -73,6 +73,11 @@ class Tree
     @root = build_tree(new_array)
   end
 
+  def delete(value)
+    new_array = (@array -= [value])
+    @root = build_tree(new_array)
+  end
+
   # Prints the binary tree
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -85,4 +90,5 @@ array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(array)
 tree.pretty_print
 tree.insert(420)
+tree.delete(6345)
 tree.pretty_print
