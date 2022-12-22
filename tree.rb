@@ -6,6 +6,7 @@ require 'pry-byebug'
 # Creates a binary tree
 class Tree
   def initialize(array)
+    @array = array
     @root = build_tree(array)
   end
 
@@ -53,6 +54,7 @@ class Tree
     Node.new(centre_value, left_node, right_node)
   end
 
+  # Builds the tree
   def build_tree(input_array)
     array = cleanup_array(input_array)
 
@@ -65,6 +67,12 @@ class Tree
     @root = Node.new(centre_value, left_node, right_node)
   end
 
+  # Insert a node
+  def insert(value)
+    new_array = @array.push(value)
+    @root = build_tree(new_array)
+  end
+
   # Prints the binary tree
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
@@ -75,4 +83,6 @@ end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(array)
+tree.pretty_print
+tree.insert(420)
 tree.pretty_print
