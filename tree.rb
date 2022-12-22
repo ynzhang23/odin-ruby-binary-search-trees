@@ -5,6 +5,9 @@ require 'pry-byebug'
 
 # Creates a binary tree
 class Tree
+  include Comparable
+  attr_reader :root
+
   def initialize(array)
     @array = array
     @root = build_tree(array)
@@ -73,9 +76,26 @@ class Tree
     @root = build_tree(new_array)
   end
 
+  # Delete a node
   def delete(value)
     new_array = (@array -= [value])
     @root = build_tree(new_array)
+  end
+
+  # Find and return a node
+  def find(value)
+    current_node = self.root
+    until current_node.value == value do
+      case current_node.value <=> value
+      # Travels left when the value is lower than the current node
+      when 1
+        current_node = current_node.left_node
+      # Travels right when the value is higher than the current node
+      when -1
+        current_node = current_node.right_node
+      end
+    end
+    current_node
   end
 
   # Prints the binary tree
@@ -88,7 +108,7 @@ end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(array)
-tree.pretty_print
 tree.insert(420)
 tree.delete(6345)
 tree.pretty_print
+p tree.find(420)
