@@ -6,7 +6,7 @@ require 'pry-byebug'
 # Creates a binary tree
 class Tree
   include Comparable
-  attr_reader :root
+  attr_reader :root, :preorder, :inorder, :postorder
 
   def initialize(array)
     @array = array
@@ -105,7 +105,7 @@ class Tree
     pretty_print(node.left_node, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_node
   end
 
-  # Return an array traversed via level order
+  # Return a level-order array
   def level_order
     queue = []
     next_queue = []
@@ -125,6 +125,16 @@ class Tree
     end
     output_array
   end
+
+  # Return a preorder array
+  def pre_order(current_node = @root, output = [])
+    return if current_node.nil?
+
+    output.push(current_node.value)
+    pre_order(current_node.left_node, output)
+    pre_order(current_node.right_node, output)
+    output
+  end
 end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -132,3 +142,4 @@ tree = Tree.new(array)
 tree.insert(420)
 tree.delete(6345)
 tree.pretty_print
+p tree.pre_order
