@@ -6,11 +6,12 @@ require 'pry-byebug'
 # Creates a binary tree
 class Tree
   include Comparable
-  attr_reader :root, :preorder, :inorder, :postorder
+  attr_reader :root, :preorder, :inorder, :postorder, :array
 
   def initialize(array)
-    @array = array
-    @root = build_tree(array)
+    clean_array = cleanup_array(array)
+    @array = clean_array
+    @root = build_tree(@array)
   end
 
   # Sort and remove duplicates the array
@@ -30,7 +31,7 @@ class Tree
     return nil if array.length == 2
     return array if array.length == 1
 
-    final_index = (array.length / 2) - 1
+    final_index = ((array.length - 1) / 2) - 1
     array[0..final_index]
   end
 
@@ -72,13 +73,17 @@ class Tree
 
   # Insert a node
   def insert(value)
-    new_array = @array.push(value)
+    return @root if @array.include?(value)
+
+    new_array = cleanup_array(@array.push(value))
     @root = build_tree(new_array)
   end
 
   # Delete a node
   def delete(value)
-    new_array = (@array -= [value])
+    return @root unless @array.include?(value)
+
+    new_array = cleanup_array(@array -= [value])
     @root = build_tree(new_array)
   end
 
@@ -175,15 +180,20 @@ class Tree
     end
     height
   end
+
+  # Return boolean if the tree is balanced
+  def balanced?
+    left_subtree_height = height(root.left_node)
+    right_subtree_height = height(root.right_node)
+    difference = (left_subtree_height - right_subtree_height).abs
+    return true if difference <= 1
+
+    false
+  end
 end
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 345, 324]
 tree = Tree.new(array)
 tree.insert(420)
-tree.delete(6345)
+tree.delete(345)
 tree.pretty_print
-p tree
-p tree.pre_order
-p tree.in_order
-p tree.post_order
-p tree.height(tree.root)
