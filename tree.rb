@@ -190,10 +190,11 @@ class Tree
 
     false
   end
-end
 
-array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 345, 324]
-tree = Tree.new(array)
-tree.insert(420)
-tree.delete(345)
-tree.pretty_print
+  # Rebalance an unbalanced binary tree
+  def rebalance(tree)
+    new_array = in_order(tree.root)
+    new_tree = Tree.new(new_array)
+    new_tree
+  end
+end
