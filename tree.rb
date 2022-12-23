@@ -155,9 +155,29 @@ class Tree
     output.push(current_node.value)
     output
   end
+
+  # Return the height of a input node
+  def height(node)
+    height = 0
+    queue = []
+    next_queue = []
+    queue.push(node.left_node)
+    queue.push(node.right_node)
+
+    until queue.empty?
+      queue.each do |node|
+        next_queue.push(node.left_node) unless node.left_node.nil?
+        next_queue.push(node.right_node) unless node.right_node.nil?
+      end
+      queue = next_queue.dup
+      next_queue.clear
+      height += 1
+    end
+    height
+  end
 end
 
-array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 345, 324]
 tree = Tree.new(array)
 tree.insert(420)
 tree.delete(6345)
@@ -166,3 +186,4 @@ p tree
 p tree.pre_order
 p tree.in_order
 p tree.post_order
+p tree.height(tree.root)
