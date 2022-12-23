@@ -192,8 +192,8 @@ class Tree
   end
 
   # Rebalance an unbalanced binary tree
-  def rebalance(tree)
-    new_array = in_order(tree.root)
+  def rebalance
+    new_array = in_order(@root)
     new_tree = Tree.new(new_array)
     new_tree
   end
